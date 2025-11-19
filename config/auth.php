@@ -35,12 +35,24 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+'guards' => [
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
     ],
+    // これはデフォルトのまま残しておく or 使わなければ放置
+    'api' => [
+        'driver' => 'token',
+        'provider' => 'users',
+        'hash' => false,
+    ],
+    // ★ 管理画面用ガード
+    'admin' => [
+        'driver' => 'jwt',
+        'provider' => 'admin_users',
+    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -60,9 +72,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'admin_users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\AdminUser::class,
         ],
 
         // 'users' => [
